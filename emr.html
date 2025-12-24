@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<head>
+  <title>EMR - Electronic Medical Record</title>
+  <link rel="stylesheet" href="emr.css">
+</head>
+<body>
+  <header id="topBar">
+    <h1>Electronic Medical Record </h1>
+  </header>
+
+  <main id="pageContainer">
+    <!-- Encounter Entry -->
+    <section id="phase1">
+      <h2>Patient Encounter Entry</h2>
+
+      <div>
+        <label for="patientId">Patient ID</label>
+        <input type="text" id="patientId" placeholder="Enter Patient ID">
+      </div>
+
+      <div>
+        <label for="patientName">Patient Name</label>
+        <input type="text" id="patientName" placeholder="Enter Patient Name">
+      </div>
+
+      <div id="vitalRow1">
+        <div>
+          <label for="bp">Blood Pressure</label>
+          <input type="text" id="bp" placeholder="120/80">
+        </div>
+        <div>
+          <label for="pulse">Pulse</label>
+          <input type="number" id="pulse" placeholder="72">
+        </div>
+      </div>
+
+      <div id="vitalRow2">
+        <div>
+          <label for="temperature">Temperature (°C)</label>
+          <input type="number" id="temperature" placeholder="37">
+        </div>
+        <div>
+          <label for="diagnosis">Diagnosis</label>
+          <select id="diagnosis">
+            <option value="">Select</option>
+            <option>Common Cold</option>
+            <option>Hypertension</option>
+            <option>Diabetes</option>
+          </select>
+        </div>
+      </div>
+
+      <h3>Prescription</h3>
+      <div id="prescriptionList"></div>
+
+      <button id="addMedicineBtn">Add Medicine</button>
+      <button id="saveEncounterBtn">Save Encounter</button>
+
+      <p id="emrMessage"></p>
+    </section>
+
+    <!--  Simple Report / History  -->
+    <section id="phase2">
+      <h2>Last Saved Encounter (Simple EMR Report)</h2>
+      <p id="noEncounterNote">
+        No encounter saved yet. Please fill Phase 1 and click "Save Encounter".
+      </p>
+
+      <div id="encounterSummary">
+        <div>
+          <strong>Patient ID:</strong>
+          <span id="sumPatientId"></span>
+        </div>
+        <div>
+          <strong>Patient Name:</strong>
+          <span id="sumPatientName"></span>
+        </div>
+        <div>
+          <strong>Diagnosis:</strong>
+          <span id="sumDiagnosis"></span>
+        </div>
+
+        <div>
+          <strong>Blood Pressure:</strong>
+          <span id="sumBp"></span>
+        </div>
+        <div>
+          <strong>Pulse:</strong>
+          <span id="sumPulse"></span>
+        </div>
+        <div>
+          <strong>Temperature:</strong>
+          <span id="sumTemp"></span>
+        </div>
+
+        <h3>Prescription Details</h3>
+        <table id="summaryTable">
+          <thead>
+            <tr>
+              <th>Medicine</th>
+              <th>Dose</th>
+              <th>Days</th>
+            </tr>
+          </thead>
+          <tbody id="summaryMedicinesBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!--  Discharge + Export -->
+
+    <section id="phase3">
+      <h2>Discharge Summary & Export (Demo)</h2>
+
+      <div>
+        <label for="dischargeSummary">Discharge Summary</label>
+        <textarea id="dischargeSummary" rows="3"
+          placeholder="Short discharge summary, advice, follow-up details"></textarea>
+      </div>
+
+      <div>
+        <label for="exportFormat">Export Format</label>
+        <select id="exportFormat">
+          <option value="">Select Format</option>
+          <option value="pdf">PDF</option>
+          <option value="fhir">FHIR</option>
+          <option value="hl7">HL7</option>
+        </select>
+      </div>
+
+      <button id="exportBtn">Export Summary</button>
+      <p id="exportMessage"></p>
+    </section>
+  </main>
+
+  <script src="emr.js"></script>
+</body>
+</html>
