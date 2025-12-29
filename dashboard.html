@@ -1,0 +1,160 @@
+<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <style>
+        body{
+            margin:0;
+            font-family: Arial, sans-serif;
+            background:#f1f5f9;
+        }
+
+        .header{
+            background:#4f46e5;
+            color:white;
+            padding:15px 25px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .header h1{
+            margin:0;
+            font-size:22px;
+        }
+
+        .logout{
+            background:#ef4444;
+            border:none;
+            color:white;
+            padding:8px 14px;
+            border-radius:6px;
+            cursor:pointer;
+        }
+
+        .container{
+            padding:25px;
+        }
+
+        .role{
+            font-size:16px;
+            margin-bottom:20px;
+            color:#334155;
+        }
+
+        .cards{
+            display:grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap:20px;
+        }
+
+        .card{
+            background:white;
+            padding:20px;
+            border-radius:12px;
+            box-shadow:0 8px 20px rgba(0,0,0,0.08);
+            cursor:pointer;
+            text-align:center;
+            transition:0.2s;
+        }
+
+        .card:hover{
+            transform:translateY(-5px);
+            background:#eef2ff;
+        }
+
+        .card h3{
+            margin:0;
+            color:#4f46e5;
+        }
+
+        .card p{
+            font-size:14px;
+            color:#64748b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Hospital Dashboard</h1>
+    <button class="logout" onclick="logout()">Logout</button>
+</div>
+
+<div class="container">
+    <div class="role" id="roleText"></div>
+
+    <!-- Admin -->
+    <div class="cards" id="admin" style="display:none;">
+        <div class="card" onclick="go('laboratory.html')">
+            <h3>Laboratory</h3>
+            <p>Manage lab tests & reports</p>
+        </div>
+        <div class="card" onclick="go('insurance.html')">
+            <h3>Insurance</h3>
+            <p>Manage insurance records</p>
+        </div>
+        <div class="card" onclick="go('staff.html')">
+            <h3>Staff</h3>
+            <p>Staff & shift management</p>
+        </div>
+        <div class="card" onclick="go('billing.html')">
+            <h3>Billing</h3>
+            <p>Invoices & payments</p>
+        </div>
+    </div>
+
+    <!-- Doctor -->
+    <div class="cards" id="doctor" style="display:none;">
+        <div class="card" onclick="go('laboratory.html')">
+            <h3>Lab Reports</h3>
+            <p>View patient test reports</p>
+        </div>
+    </div>
+
+    <!-- Staff -->
+    <div class="cards" id="staff" style="display:none;">
+        <div class="card" onclick="go('laboratory.html')">
+            <h3>Lab Samples</h3>
+            <p>Manage samples</p>
+        </div>
+        <div class="card" onclick="go('billing.html')">
+            <h3>Billing Assist</h3>
+            <p>Assist billing process</p>
+        </div>
+    </div>
+</div>
+
+<script>
+let role = localStorage.getItem("role");
+
+if(!role){
+    window.location.href = "login.html";
+}
+
+document.getElementById("roleText").innerText =
+    "Logged in as: " + role.toUpperCase();
+
+if(role === "admin"){
+    document.getElementById("admin").style.display = "grid";
+}
+else if(role === "doctor"){
+    document.getElementById("doctor").style.display = "grid";
+}
+else if(role === "staff"){
+    document.getElementById("staff").style.display = "grid";
+}
+
+function go(page){
+    window.location.href = page;
+}
+
+function logout(){
+    localStorage.removeItem("role");
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

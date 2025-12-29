@@ -1,0 +1,160 @@
+<html>
+<head>
+    <title>Staff & Shift Management</title>
+    <style>
+        body{
+            font-family: Arial;
+            background: #f0f6ff;
+            padding: 25px;
+        }
+        .container{
+            background: white;
+            width: 650px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+        h2{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input, select{
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button{
+            width: 100%;
+            padding: 12px;
+            background: #0066ff;
+            border: none;
+            color: white;
+            margin-top: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover{ background:#004acc; }
+
+        table{
+            width: 100%;
+            margin-top: 25px;
+            border-collapse: collapse;
+        }
+        th, td{
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th{
+            background: #0066ff;
+            color:white;
+        }
+        .del{
+            padding:5px 10px;
+            background:red;
+            color:white;
+            border:none;
+            cursor:pointer;
+            border-radius:4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Staff & Shift Management</h2>
+
+    <label>Staff Name</label>
+    <input type="text" id="name" placeholder="Enter Staff Name">
+
+    <label>Role</label>
+    <input type="text" id="role" placeholder="Doctor / Nurse / Lab Tech / Admin">
+
+    <label>Phone</label>
+    <input type="text" id="phone" placeholder="Enter Phone Number">
+
+    <label>Shift</label>
+    <select id="shift">
+        <option>Morning</option>
+        <option>Evening</option>
+        <option>Night</option>
+    </select>
+
+    <button onclick="saveStaff()">Save Staff</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Phone</th>
+                <th>Shift</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="staffData"></tbody>
+    </table>
+</div>
+
+<script>
+function saveStaff(){
+    let name = document.getElementById("name").value;
+    let role = document.getElementById("role").value;
+    let phone = document.getElementById("phone").value;
+    let shift = document.getElementById("shift").value;
+
+    if(name=="" || role=="" || phone==""){
+        alert("Please fill all fields");
+        return;
+    }
+
+    let staff = { name, role, phone, shift };
+
+    let data = JSON.parse(localStorage.getItem("staffList")) || [];
+    data.push(staff);
+    localStorage.setItem("staffList", JSON.stringify(data));
+
+    loadData();
+    clearForm();
+}
+
+function loadData(){
+    let data = JSON.parse(localStorage.getItem("staffList")) || [];
+    let table = "";
+
+    data.forEach((item, index)=>{
+        table += `
+        <tr>
+            <td>${item.name}</td>
+            <td>${item.role}</td>
+            <td>${item.phone}</td>
+            <td>${item.shift}</td>
+            <td><button class="del" onclick="delStaff(${index})">X</button></td>
+        </tr>`;
+    });
+
+    document.getElementById("staffData").innerHTML = table;
+}
+
+function delStaff(i){
+    let data = JSON.parse(localStorage.getItem("staffList")) || [];
+    data.splice(i,1);
+    localStorage.setItem("staffList", JSON.stringify(data));
+    loadData();
+}
+
+function clearForm(){
+    document.getElementById("name").value="";
+    document.getElementById("role").value="";
+    document.getElementById("phone").value="";
+}
+
+loadData();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<html>
+<head>
+    <title>Billing & Invoicing</title>
+    <style>
+        body{
+            font-family: Arial;
+            background: #eef4ff;
+            padding: 25px;
+        }
+        .container{
+            background: white;
+            width: 650px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+        h2{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input{
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button{
+            width: 100%;
+            padding: 12px;
+            background: #0066ff;
+            border: none;
+            color: white;
+            margin-top: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover{ background:#004bcc; }
+
+        table{
+            width: 100%;
+            margin-top: 25px;
+            border-collapse: collapse;
+        }
+        th, td{
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th{
+            background: #0066ff;
+            color:white;
+        }
+        .del{
+            padding:5px 10px;
+            background:red;
+            color:white;
+            border:none;
+            cursor:pointer;
+            border-radius:4px;
+        }
+
+        .totalBox{
+            background:#dfe9ff;
+            padding:15px;
+            border-radius:6px;
+            margin-top:15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Billing & Invoicing</h2>
+
+    <label>Patient ID</label>
+    <input type="text" id="pid" placeholder="Enter Patient ID">
+
+    <label>Service Name</label>
+    <input type="text" id="service" placeholder="e.g. Blood Test, X-Ray">
+
+    <label>Cost (৳)</label>
+    <input type="number" id="cost" placeholder="Enter Service Cost">
+
+    <button onclick="addService()">Add Service</button>
+
+    <div class="totalBox">
+        <p><b>Subtotal:</b> ৳ <span id="subtotal">0</span></p>
+        <p><b>Insurance Discount:</b> ৳ <span id="discount">0</span></p>
+        <p><b>Total Bill:</b> ৳ <span id="total">0</span></p>
+        <button onclick="saveInvoice()">Save Invoice</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Patient ID</th>
+                <th>Services</th>
+                <th>Total Bill</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="billData"></tbody>
+    </table>
+
+</div>
+
+<script>
+let services = [];
+let subtotal = 0;
+let discount = 0;
+
+function addService(){
+    let service = document.getElementById("service").value;
+    let cost = parseFloat(document.getElementById("cost").value);
+
+    if(service=="" || cost=="" || cost<=0){
+        alert("Please enter valid service and cost");
+        return;
+    }
+
+    services.push({ service, cost });
+    subtotal += cost;
+
+    checkInsurance();
+
+    updateBill();
+
+    document.getElementById("service").value="";
+    document.getElementById("cost").value="";
+}
+
+function checkInsurance(){
+    let pid = document.getElementById("pid").value;
+    let ins = JSON.parse(localStorage.getItem("insurance")) || [];
+
+    let found = ins.find(x => x.pid === pid);
+
+    if(found){
+        discount = subtotal * 0.20; // 20% discount
+    } else {
+        discount = 0;
+    }
+}
+
+function updateBill(){
+    document.getElementById("subtotal").innerText = subtotal;
+    document.getElementById("discount").innerText = discount;
+    document.getElementById("total").innerText = subtotal - discount;
+}
+
+function saveInvoice(){
+    let pid = document.getElementById("pid").value;
+
+    if(pid=="" || subtotal==0){
+        alert("Enter patient ID and services before saving.");
+        return;
+    }
+
+    let total = subtotal - discount;
+
+    let record = {
+        pid,
+        services,
+        total
+    };
+
+    let data = JSON.parse(localStorage.getItem("billing")) || [];
+    data.push(record);
+    localStorage.setItem("billing", JSON.stringify(data));
+
+    resetBilling();
+    loadData();
+}
+
+function resetBilling(){
+    services = [];
+    subtotal = 0;
+    discount = 0;
+    updateBill();
+    document.getElementById("pid").value="";
+}
+
+function loadData(){
+    let data = JSON.parse(localStorage.getItem("billing")) || [];
+    let table = "";
+
+    data.forEach((item, index)=>{
+        let list = item.services.map(s => s.service + " (৳" + s.cost + ")").join("<br>");
+
+        table += `
+        <tr>
+            <td>${item.pid}</td>
+            <td>${list}</td>
+            <td>৳ ${item.total}</td>
+            <td><button class="del" onclick="deleteBill(${index})">X</button></td>
+        </tr>`;
+    });
+
+    document.getElementById("billData").innerHTML = table;
+}
+
+function deleteBill(i){
+    let data = JSON.parse(localStorage.getItem("billing")) || [];
+    data.splice(i,1);
+    localStorage.setItem("billing", JSON.stringify(data));
+    loadData();
+}
+
+loadData();
+</script>
+
+</body>
+</html>

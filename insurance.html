@@ -1,0 +1,157 @@
+<html>
+<head>
+    <title>Insurance Management</title>
+    <style>
+        body{
+            font-family: Arial;
+            background: #eef4ff;
+            padding: 25px;
+        }
+        .container{
+            background: white;
+            width: 600px;
+            margin: auto;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+        h2{
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input{
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button{
+            width: 100%;
+            padding: 12px;
+            background: #0066ff;
+            border: none;
+            color: white;
+            margin-top: 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover{ background:#004bcc; }
+
+        table{
+            width: 100%;
+            margin-top: 25px;
+            border-collapse: collapse;
+        }
+        th, td{
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th{
+            background: #0066ff;
+            color:white;
+        }
+        .del{
+            padding:5px 10px;
+            background:red;
+            color:white;
+            border:none;
+            cursor:pointer;
+            border-radius:4px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Insurance Management</h2>
+
+    <label>Patient ID</label>
+    <input type="text" id="pid" placeholder="Enter Patient ID">
+
+    <label>Insurance Company</label>
+    <input type="text" id="company" placeholder="Enter Insurance Company">
+
+    <label>Policy ID</label>
+    <input type="text" id="policy" placeholder="Enter Policy ID">
+
+    <label>Validity Date</label>
+    <input type="date" id="validity">
+
+    <button onclick="saveInsurance()">Save Insurance Record</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Patient ID</th>
+                <th>Company</th>
+                <th>Policy ID</th>
+                <th>Validity</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody id="insData"></tbody>
+    </table>
+</div>
+
+<script>
+function saveInsurance(){
+    let pid = document.getElementById("pid").value;
+    let company = document.getElementById("company").value;
+    let policy = document.getElementById("policy").value;
+    let validity = document.getElementById("validity").value;
+
+    if(pid=="" || company=="" || policy=="" || validity==""){
+        alert("Please fill all fields");
+        return;
+    }
+
+    let record = { pid, company, policy, validity };
+
+    let data = JSON.parse(localStorage.getItem("insurance")) || [];
+    data.push(record);
+    localStorage.setItem("insurance", JSON.stringify(data));
+
+    loadData();
+    clearForm();
+}
+
+function loadData(){
+    let data = JSON.parse(localStorage.getItem("insurance")) || [];
+    let table = "";
+
+    data.forEach((item, index)=>{
+        table += `
+        <tr>
+            <td>${item.pid}</td>
+            <td>${item.company}</td>
+            <td>${item.policy}</td>
+            <td>${item.validity}</td>
+            <td><button class="del" onclick="delData(${index})">X</button></td>
+        </tr>`;
+    });
+
+    document.getElementById("insData").innerHTML = table;
+}
+
+function delData(i){
+    let data = JSON.parse(localStorage.getItem("insurance")) || [];
+    data.splice(i,1);
+    localStorage.setItem("insurance", JSON.stringify(data));
+    loadData();
+}
+
+function clearForm(){
+    document.getElementById("pid").value="";
+    document.getElementById("company").value="";
+    document.getElementById("policy").value="";
+    document.getElementById("validity").value="";
+}
+
+loadData();
+</script>
+
+</body>
+</html>

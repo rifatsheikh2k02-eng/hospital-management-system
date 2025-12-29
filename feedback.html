@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<head>
+  <title>Feedback & Complaint Management</title>
+  <link rel="stylesheet" href="feedback.css">
+</head>
+<body>
+  <header id="topBar">
+    <h1>Feedback & Complaint Management</h1>
+  </header>
+
+  <main id="pageContainer">
+
+    <!-- Submit Feedback / Complaint -->
+
+    <section id="phase1">
+      <h2>Submit Feedback / Complaint</h2>
+
+      <div id="row1">
+        <div>
+          <label for="fbName">Name</label>
+          <input type="text" id="fbName" placeholder="Your name">
+        </div>
+        <div>
+          <label for="fbContact">Contact</label>
+          <input type="text" id="fbContact" placeholder="Phone or email">
+        </div>
+      </div>
+
+      <div id="row2">
+        <div>
+          <label for="fbType">Type</label>
+          <select id="fbType">
+            <option value="Feedback">Feedback</option>
+            <option value="Complaint">Complaint</option>
+          </select>
+        </div>
+        <div>
+          <label for="fbCategory">Category</label>
+          <select id="fbCategory">
+            <option value="">Select Category</option>
+            <option value="Service">Service</option>
+            <option value="Billing">Billing</option>
+            <option value="Doctor">Doctor</option>
+            <option value="Facility">Facility</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="fbPriority">Priority</label>
+          <select id="fbPriority">
+            <option value="Low">Low</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="row3">
+        <div>
+          <label for="fbMessageText">Message</label>
+          <textarea id="fbMessageText" rows="4"
+            placeholder="Describe your feedback or complaint"></textarea>
+        </div>
+      </div>
+
+      <button id="submitFbBtn">Submit</button>
+      <p id="phase1Status"></p>
+    </section>
+
+
+    <!-- Feedback / Complaint Tracker -->
+    <section id="phase2">
+      <h2>Phase 2: Feedback / Complaint Tracker</h2>
+
+      <div id="filterRow">
+        <div>
+          <label for="filterType">Filter by Type</label>
+          <select id="filterType">
+            <option value="">All</option>
+            <option value="Feedback">Feedback</option>
+            <option value="Complaint">Complaint</option>
+          </select>
+        </div>
+        <div>
+          <label for="filterStatus">Filter by Status</label>
+          <select id="filterStatus">
+            <option value="">All</option>
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+        <div>
+          <label for="filterPriority">Filter by Priority</label>
+          <select id="filterPriority">
+            <option value="">All</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="applyFilterBtn">Apply Filter</button>
+      <button id="clearFilterBtn">Clear Filter</button>
+
+      <h3>Feedback & Complaint List</h3>
+      <table id="complaintTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Priority</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="complaintBody"></tbody>
+      </table>
+
+      <h3>Update Status</h3>
+      <div id="statusRow">
+        <div>
+          <label for="statusUpdateId">Complaint ID</label>
+          <input type="text" id="statusUpdateId" placeholder="e.g. FB-001">
+        </div>
+        <div>
+          <label for="newStatusSelect">New Status</label>
+          <select id="newStatusSelect">
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+      </div>
+
+      <button id="updateStatusBtn">Update Status</button>
+      <p id="phase2Status"></p>
+    </section>
+
+
+    <!-- Analytics -->
+
+    <section id="phase3">
+      <h2>Feedback & Complaint Analytics</h2>
+
+      <div id="kpiRow">
+        <div>
+          <div>Total Feedback</div>
+          <div id="kpiFeedbackCount">0</div>
+        </div>
+        <div>
+          <div>Total Complaints</div>
+          <div id="kpiComplaintCount">0</div>
+        </div>
+        <div>
+          <div>Open Items</div>
+          <div id="kpiOpenCount">0</div>
+        </div>
+        <div>
+          <div>Closed Items</div>
+          <div id="kpiClosedCount">0</div>
+        </div>
+      </div>
+
+      <h3>By Category</h3>
+      <table id="categoryTable">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody id="categoryBody"></tbody>
+      </table>
+
+      <button id="recalcAnalyticsBtn">Recalculate Analytics</button>
+      <p id="phase3Status"></p>
+    </section>
+
+  </main>
+
+  <script src="feedback.js"></script>
+</body>
+</html>

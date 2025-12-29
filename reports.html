@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<head>
+  <title>Reports & Analytics</title>
+  <link rel="stylesheet" href="reports.css">
+</head>
+<body>
+  <header id="topBar">
+    <h1>Reports & Analytics</h1>
+  </header>
+
+  <main id="pageContainer">
+
+    <!-- PHASE 1: Add Visits & Patient List -->
+
+    <section id="phase1">
+      <h2>Add Patient Visits</h2>
+
+      <div id="visitRow1">
+        <div>
+          <label for="doctorSelect">Doctor</label>
+          <select id="doctorSelect">
+            <option value="">Select Doctor</option>
+            <option value="Dr. Smith">Dr. Smith</option>
+            <option value="Dr. Ali">Dr. Ali</option>
+            <option value="Dr. Khan">Dr. Khan</option>
+          </select>
+        </div>
+        <div>
+          <label for="deptSelect">Department</label>
+          <select id="deptSelect">
+            <option value="">Select Department</option>
+            <option value="Cardiology">Cardiology</option>
+            <option value="Orthopedics">Orthopedics</option>
+            <option value="Medicine">Medicine</option>
+          </select>
+        </div>
+        <div>
+          <label for="visitDate">Date</label>
+          <input type="date" id="visitDate">
+        </div>
+      </div>
+
+      <div id="visitRow2">
+        <div>
+          <label for="patientName">Patient Name</label>
+          <input type="text" id="patientName" placeholder="Enter patient name">
+        </div>
+        <div>
+          <label for="visitType">Visit Type</label>
+          <select id="visitType">
+            <option value="OPD">OPD</option>
+            <option value="IPD">IPD</option>
+          </select>
+        </div>
+        <div>
+          <label for="visitRevenue">Revenue</label>
+          <input type="number" id="visitRevenue" placeholder="0">
+        </div>
+      </div>
+
+      <button id="addVisitBtn">Add Visit to List</button>
+      <p id="phase1Status"></p>
+
+      <h3>Patient Visit List</h3>
+      <table id="visitTable">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Department</th>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Revenue</th>
+          </tr>
+        </thead>
+        <tbody id="visitBody"></tbody>
+      </table>
+    </section>
+
+    <!-- PHASE 2: Dashboard  -->
+
+    <section id="phase2">
+      <h2>Dashboard View</h2>
+
+      <div id="kpiRow">
+        <div>
+          <div>Total Visits</div>
+          <div id="kpiTotalVisits">0</div>
+        </div>
+        <div>
+          <div>OPD Visits</div>
+          <div id="kpiOpdVisits">0</div>
+        </div>
+        <div>
+          <div>IPD Visits</div>
+          <div id="kpiIpdVisits">0</div>
+        </div>
+        <div>
+          <div>Total Revenue</div>
+          <div id="kpiRevenue">0</div>
+        </div>
+      </div>
+
+      <button id="refreshDashboardBtn">Refresh Dashboard</button>
+      <p id="phase2Status"></p>
+    </section>
+
+    <!-- Advanced Analytics -->
+
+    <section id="phase3">
+      <h2>Advanced Analytics</h2>
+
+      <h3>Cohort Summary (by Department)</h3>
+      <table id="cohortTable">
+        <thead>
+          <tr>
+            <th>Department</th>
+            <th>Visits</th>
+            <th>Avg Revenue</th>
+          </tr>
+        </thead>
+        <tbody id="cohortBody"></tbody>
+      </table>
+
+      <h3>Doctor Productivity</h3>
+      <table id="productivityTable">
+        <thead>
+          <tr>
+            <th>Doctor</th>
+            <th>Visits</th>
+            <th>Estimated Patients/Day</th>
+          </tr>
+        </thead>
+        <tbody id="productivityBody"></tbody>
+      </table>
+
+      <h3>Turnaround & Anomalies</h3>
+      <table id="tatTable">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Type</th>
+            <th>Duration (min)</th>
+            <th>Flag</th>
+          </tr>
+        </thead>
+        <tbody id="tatBody"></tbody>
+      </table>
+
+      <button id="recalcAnalyticsBtn">Recalculate Analytics</button>
+      <p id="phase3Status"></p>
+    </section>
+  </main>
+
+  <script src="reports.js"></script>
+</body>
+</html>

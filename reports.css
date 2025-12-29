@@ -1,0 +1,129 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+}
+
+#topBar {
+  background-color: #1f6feb;
+  color: white;
+  padding: 10px 16px;
+}
+
+#pageContainer {
+  max-width: 1000px;
+  margin: 16px auto;
+  padding: 0 8px;
+}
+
+section {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+h1, h2, h3 {
+  margin-top: 0;
+}
+
+label {
+  display: block;
+  margin-bottom: 4px;
+}
+
+input[type="date"],
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+/* visit input rows */
+
+#visitRow1,
+#visitRow2 {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+#visitRow1 > div,
+#visitRow2 > div {
+  flex: 1;
+}
+
+/* buttons */
+
+button {
+  padding: 8px 12px;
+  margin-top: 8px;
+  margin-right: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #1f6feb;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* status text */
+
+#phase1Status,
+#phase2Status,
+#phase3Status {
+  font-size: 14px;
+  margin-top: 8px;
+}
+
+/* tables */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+}
+
+th,
+td {
+  padding: 6px;
+  border-bottom: 1px solid #eeeeee;
+  text-align: left;
+}
+
+thead {
+  background-color: #f0f0f0;
+}
+
+/* KPI row */
+
+#kpiRow {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+#kpiRow > div {
+  flex: 1;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  padding: 8px;
+  text-align: center;
+}
+
+#kpiRow > div div:first-child {
+  font-size: 14px;
+  color: #555555;
+}
+
+#kpiRow > div div:last-child {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 4px;
+}
